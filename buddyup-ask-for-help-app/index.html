@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
+    <meta charset="utf-8">
+    
+    
+    <script src="date.js"></script>
+    <script src="buddyup.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="buddyup.css">
+
+  </head>
+
+  
+  <body data-channel="ce3cace9673d400a87fdbf2072b244e4" data-usertype="client">
+    
+    <!-- butons on the right -->
+<!--
+    <div id="buddyup-connection-status">not connected</div>
+
+    <button class="right-button" id="chat-connect">connect</button>
+    <button class="right-button" id="chat-disconnect">disconnect</button>
+-->
+    
+    <section>
+      
+      
+      
+      <x-layout>
+        <header>Live Help
+<!--          <a href="javascript:window.history.back();" id="back"></a>-->
+<!--          <button id="camera-btn"></button>-->
+
+        </header>
+        
+        <div class="subheader"><span id="demo-status-msg">Share Screen?</span><a id="chat-connect">Start</a> <a id="chat-disconnect">End</a></div>
+        
+        <section>
+          
+          <div id="wrapper" class="main">
+<!--            <h3>Today</h3>-->
+            <div id="chat-container">
+              
+              <ul id="chat-intro">
+                <li>
+                  <p>Welcome to Live Help</p>
+                </li>
+              </ul>
+              
+              <ul id="chat-list">
+                
+<!--
+                <li data-usertype="client">
+                  <p>asdf</p>
+                  <time class="timestamp">11:29 PM</time>
+                </li>
+                
+                <li data-usertype="controller">
+                  <h3>Jen, Firefox OS Helper</h3>
+                  <img src="assets/avatar.png" class="avatar" />
+                  <p>asdf</p>
+                  <time class="timestamp">11:30 PM</time>
+                </li>
+-->
+                
+              </ul>
+              
+              <ul id="chat-end">
+                <li>
+                  <p>Thank you for submitting your feedback! Your chat has ended.</p>
+                </li>
+              </ul>
+              <ul id="end-chat-notification">
+                <li>
+                  <p>Success! Issue closed and survey sent.</p>
+                </li>
+              </ul>
+            </div>
+            <div id="channel" data-channel="ce3cace9673d400a87fdbf2072b244e4"></div>
+          </div>
+        </section>
+      </x-layout>
+    </section>
+    <div id="footer">
+        <div class="message-content">
+          <input id="file-screenshot" accept="image/*" type="file">
+          <input name="message" id="composer-message" maxlength="500" autocomplete="off" placeholder="Write your message ..." class="input">
+          <button id="submit-chat">Send</button>
+        </div>
+    </div>
+    <div id="end-confirm">
+      <div class="confirm">
+        <p>If you end the chat, this question will be removed from the queue. The user will receive a feedback survey.</p>
+        <button class="cancel">Cancel</button>
+        <button class="submit end">End Chat</button>
+      </div>
+    </div>
+    <div id="end-survey">
+      <div class="survey">
+        <h2>Feedback Survey</h2>
+        <section>
+          <p>Please provide feedback for your helper.</p>
+          <p>Were you satisified with the help you received?</p>
+          <div>
+            <input name="help" type="radio"><span>YES</span>
+            <input name="help" type="radio"><span>NO</span>
+          </div>
+          <p>Was your problem resolved?</p>
+          <div>
+            <input name="resolve" type="radio"><span>YES</span>
+            <input name="resolve" type="radio"><span>NO</span>
+          </div>
+        </section>
+        <button class="cancel">Cancel</button>
+        <button class="submit end-survey">Submit</button>
+      </div>
+    </div>
+  
+  </body>
+  
+  
+</html>

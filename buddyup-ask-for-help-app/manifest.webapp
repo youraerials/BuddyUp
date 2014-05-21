@@ -1,0 +1,27 @@
+{
+  "name": "BU Client", 
+  "icons": {
+    "128": "/bb_icon_128.png"
+  }, 
+  "default_locale": "en-US", 
+  "orientation": "default", 
+  "description": "A Test App for Buddy Up", 
+  "launch_path": "/index.html", 
+  "type": "certified",
+  "permissions": {
+    "systemXHR": {},
+    "settings": { "access": "readwrite" }   
+  },
+  
+  "activities": {
+
+    "buddyup": {
+      "href": "./index.html"
+    }
+  },
+  
+  "developer": {
+    "url": "http://bunnyandboar.com", 
+    "name": "Bunny & Boar"
+  }
+}

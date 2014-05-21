@@ -1,0 +1,19 @@
+{
+  "name": "BU Helper", 
+  "icons": {
+    "128": "/bb_icon_128.png"
+  }, 
+  "default_locale": "en-US", 
+  "orientation": "default", 
+  "description": "A Helper Test for Buddy Up", 
+  "launch_path": "/index.html", 
+  "type": "certified",
+  "permissions": {
+    "systemXHR": {},
+    "settings": { "access": "readwrite" }   
+  },
+  "developer": {
+    "url": "http://bunnyandboar.com", 
+    "name": "Bunny & Boar"
+  }
+}

@@ -1,0 +1,128 @@
+
+body {
+ 
+  margin: 0;
+  padding: 0;
+}
+
+#buddyup-container {
+	
+  position: absolute;
+
+  width: 100%;
+  height: 100%;
+
+  background: url(subtle_white_feathers.png) top left repeat;
+  background-size: 50%;
+  
+  font-size: 14px;
+  font-family: sans-serif;
+  overflow: hidden;
+  
+	
+}
+
+
+#remote-screen-cap { /* showing the remote screen at 80% scale, should be same proportions */
+  position: absolute;
+  
+  top: 0;
+  left: 0vw;
+  
+  width: 80vw;
+  height: 80vh;
+  
+  background: #999;
+  overflow: hidden;
+  
+}
+
+#remote-screen-image {
+  position: absolute;
+  width: 80vw;
+  height: 80vh;
+  pointer-events: none;
+  
+}
+
+#chat-relay {
+  position: absolute;
+  top: 81vh;
+  left: 0;
+  width: 100%;
+}
+
+#chat-input {
+  width: 100vw;
+  font-size: 20px;
+}
+#chat-send-btn {
+  float: right;
+  width: 20vw;
+
+  font-size: 18px;
+  line-height: 22px;
+}
+
+
+#new-chat-text {
+  
+  width: 75vw;
+  font-size: 18px;
+  line-height: 20px;
+}
+
+#chat-log {
+  
+  font-size: 16px;
+  width: 100%;
+  height: 15vh;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  line-height: 20px;
+  
+  overflow: scroll;
+  
+}
+
+.chat-them {
+  
+  color: green;
+  text-align: right;
+  background: #ccc;
+  color: teal;
+  padding: 5px;
+}
+
+.chat-me {
+  color: black;
+  padding: 5px;
+}
+
+.right-button {
+  float: right;
+  clear: both;
+  margin-top: 1vh;
+  height: 7vh;
+  width: 20vw;
+  
+  font-size: 9px;
+}
+
+#buddyup-connection-status {
+  float: right;
+  clear: both;
+  margin-top: 1vh;
+  height: 7vh;
+  font-size: 9px;
+  width: 20vw;
+  text-align: center;
+ 
+}
+
+
+
+
+
+
