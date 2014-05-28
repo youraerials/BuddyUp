@@ -105,10 +105,29 @@ var BuddyUp = {
       console.log("click on disconnect!");
       
       if (SocketTransport.socket) {
+        
+        
+        var timestamp = new Date().getTime();
+        var msg = '{ "clientID": "' + SocketTransport.clientID + '", "groupID": "' + SocketTransport.groupID + '", "type": "uiEvent", "uiEvent": "endsession", "status": "ok", "x": 0, "y": 0, "timestamp": ' + timestamp + ' }';
 
-        SocketTransport.socket.close();
-        SocketTransport.isOpen = false;
-        //BuddyUp.stopScreenCap();
+        try {
+          console.log("sending: " + msg);
+          SocketTransport.socket.send(msg);
+        }
+        catch (er) {
+          console.log("couldn't send typing state..."); 
+        }
+        
+        
+        
+        setTimeout(function() {
+          
+          SocketTransport.socket.close();
+          SocketTransport.isOpen = false;
+          //BuddyUp.stopScreenCap();
+          
+        }, 1500);
+       
 
       }
       else {
@@ -184,7 +203,17 @@ var BuddyUp = {
       
     }, false);
     
-    
+    chatTextField.addEventListener("keypress", function(inEvent) {
+
+      if (inEvent.keyCode == 13) { // the "return" key
+
+        chatTextField.blur();
+        document.getElementById("chat-send-btn").click();
+
+      }
+
+    }, false);
+  
     
     document.getElementById("chat-send-btn").addEventListener("click", function() {
       

@@ -74,13 +74,14 @@ document.addEventListener("DOMContentLoaded", function () {
     
   }, false);
   
+    
   
   document.getElementById("chat-connect").addEventListener("click", function() {
     
     console.log("CLICK ON CONNECT!");
     
     
-    document.querySelector("#demo-status-msg").innerHTML = "Share Screen?";
+    document.querySelector("#demo-status-msg").innerHTML = "Now sharing your screen";
     document.querySelector("#chat-disconnect").style.display = "block";
     document.querySelector("#chat-connect").style.display = "none";
     
@@ -111,7 +112,7 @@ document.addEventListener("DOMContentLoaded", function () {
     
     console.log("CLICK ON DISCONNECT!");
     
-    document.querySelector("#demo-status-msg").innerHTML = "Share Screen?";
+    document.querySelector("#demo-status-msg").innerHTML = "Share screen?";
     document.querySelector("#chat-disconnect").style.display = "none";
     document.querySelector("#chat-connect").style.display = "block";
     
@@ -153,6 +154,19 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
   }, false);
+  
+  chatTextField.addEventListener("keypress", function(inEvent) {
+    
+    if (inEvent.keyCode == 13) { // the "return" key
+      
+      chatTextField.blur();
+      document.getElementById("submit-chat").click();
+      
+    }
+
+  }, false);
+  
+  
   
   
   
@@ -492,7 +506,7 @@ var SocketTransport = {
         SocketTransport.socket = false;
         SocketTransport.isOpen = false;
         
-        document.querySelector("#demo-status-msg").innerHTML = "Share Screen?";
+        document.querySelector("#demo-status-msg").innerHTML = "Share screen?";
         document.querySelector("#chat-disconnect").style.display = "none";
         document.querySelector("#chat-connect").style.display = "block";
 
@@ -569,6 +583,38 @@ var SocketTransport = {
       window.scrollTo(0, document.body.scrollHeight);
       
     }
+    
+    else if (inMessage.uiEvent == "endsession" && inMessage.clientID != SocketTransport.clientID) {
+      
+      console.log("HELPER HAS ENDED SESSION!");
+      
+      var tempTyping = document.querySelector(".temp-typing");
+      if (tempTyping) tempTyping.parentNode.removeChild(tempTyping);
+      
+      document.getElementById("chat-list").innerHTML += '<li data-usertype="controller"><h3>Martin, Firefox OS Helper</h3><img src="assets/avatar.png" class="avatar" /><p>Help Session Ended. Bye! <a id="reset-chat">tap to reset</a></p><time class="timestamp">' + dateFormat(new Date(), "longTime") + '</time></li>';
+      
+      document.querySelector("#demo-status-msg").innerHTML = "Share screen?";
+      document.querySelector("#chat-disconnect").style.display = "none";
+      document.querySelector("#chat-connect").style.display = "block";
+      
+      document.querySelector("#reset-chat").addEventListener("click", function() {
+        
+        document.getElementById("chat-list").innerHTML = ""; 
+        
+      });
+    
+    
+      if (window.navigator.mozSettings)
+        window.navigator.mozSettings.createLock().set({'buddyup.remotelink.enabled': false});  
+      
+      window.scrollTo(0, document.body.scrollHeight);
+      
+    }
+    
+      
+     
+    
+    
     
     
 

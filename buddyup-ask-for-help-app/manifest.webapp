@@ -1,7 +1,7 @@
 {
   "name": "BU Client", 
   "icons": {
-    "120": "/assets/app-icon.png"
+    "128": "/assets/app-icon.png"
   }, 
   "default_locale": "en-US", 
   "orientation": "default", 
