@@ -13,8 +13,11 @@ body {
   height: 100%;
   
   font-size: 14px;
-  font-family: sans-serif;
+  font-family: FiraSans;
   overflow: hidden;
+  font-size: 1.1rem;
+	line-height: 1.3rem;
+	font-weight: 300;
 
 }
 
@@ -22,7 +25,17 @@ body {
   display: none;
 }
 
-chat-connect {
+#chat-container {
+  margin-top: 105px;
+}
+
+#chat-container p {
+ 
+  font-size: 1.1rem;
+  line-height: 1.3rem;
+  font-weight: 300;
+  margin-left: 10px;
+  margin-right: 10px;
   
 }
 
@@ -119,9 +132,7 @@ chat-connect {
 
 
 
-* {
-	font-family: FiraSans
-}
+
 @font-face {
 	font-family: FiraSans;
 	src: url(assets/FiraSans-Regular.woff) format('woff');
@@ -146,6 +157,11 @@ chat-connect {
 	font-weight: 700;
 	font-style: normal
 }
+
+* {
+	font-family: FiraSans;
+}
+
 body,html {
 	height: 100%;
 	margin: 0;
@@ -167,6 +183,25 @@ x-layout>section>:only-child {
 	line-height: 75px;
 	text-align: center
 }
+
+.help-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+}
+
+.subheader {
+  position: fixed;
+  top: 52px;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  box-shadow: 0px 2px 8px rgba(0,0,0,0.3);
+}
+
+
 .home {
 	margin: 0 auto;
 	padding: 20px 40px;
@@ -413,16 +448,35 @@ span.question {
 #file-screenshot {
 	visibility: hidden
 }
+
+.typing-indicator {
+  height: 1.3rem;
+}
+
+#chat-reconnect {
+  background-color: #fff;
+  border-radius: 20px;
+  color: #27c8c2;
+  float: right;
+  font-size: 1.1rem;
+  line-height: 1.2rem;
+  margin: 10px;
+  padding: 8px 15px;
+  text-decoration: none;
+  font-size: 12px;
+  display: none;
+}
+
 .subheader a {
-	background-color: #27c8c2;
-	border-radius: 20px;
-	color: #fff;
-	float: right;
-	font-size: 1.1rem;
-	line-height: 1.2rem;
-	margin: 10px;
-	padding: 8px 15px;
-	text-decoration: none
+  background-color: #27c8c2;
+  border-radius: 20px;
+  color: #fff;
+  float: right;
+  font-size: 1.1rem;
+  line-height: 1.2rem;
+  margin: 10px;
+  padding: 8px 15px;
+  text-decoration: none;
 }
 #chat-list {
 	padding: 0

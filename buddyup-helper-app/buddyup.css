@@ -89,10 +89,16 @@ body {
 .chat-them {
   
   color: green;
-  text-align: right;
-  background: #ccc;
-  color: teal;
-  padding: 5px;
+  background: #27c8c2;
+  color: white;
+  padding: 10px;
+}
+
+.chat-them.temp-typing {
+  background: white;
+}
+.typing-indicator {
+  height: 1rem;
 }
 
 .chat-me {

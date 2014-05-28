@@ -20,6 +20,23 @@ document.addEventListener("DOMContentLoaded", function () {
   );
   
   
+  var heartbeatInterval = setInterval(function() {
+    
+    console.log(SocketTransport.socket.readyState);
+    
+    if (! SocketTransport.socket || 
+        ! SocketTransport.socket.readyState || 
+        SocketTransport.socket.readyState != 1) {
+     
+      console.log("SOCKET READY STATE CHANGED!  new state: " + SocketTransport.socket.readyState);
+      
+      document.querySelector("#chat-reconnect").style.display = "block";
+      
+    }
+    
+  }, 5000);
+  
+  
   
   
   document.getElementById("submit-chat").addEventListener("click", function() {
@@ -42,11 +59,18 @@ document.addEventListener("DOMContentLoaded", function () {
       
       }
       catch (er) {
-        console.log("couldn't send chat text..."); 
+        
+        console.log(er);
+        
+        console.log("couldn't send chat text...");
+        
+        document.querySelector("#chat-reconnect").style.display = "block";
+        
+        
       }
     
     
-      document.getElementById("chat-list").scrollTop = document.getElementById("chat-list").scrollHeight;
+      window.scrollTo(0, document.body.scrollHeight);
     
   }, false);
   
@@ -56,7 +80,7 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log("CLICK ON CONNECT!");
     
     
-    document.querySelector("#demo-status-msg").innerHTML = "Demo Live!";
+    document.querySelector("#demo-status-msg").innerHTML = "Share Screen?";
     document.querySelector("#chat-disconnect").style.display = "block";
     document.querySelector("#chat-connect").style.display = "none";
     
@@ -70,6 +94,17 @@ document.addEventListener("DOMContentLoaded", function () {
     //document.getElementById("buddyup-connection-status").innerHTML = "connected!";
     
   
+  }, false);
+  
+  document.getElementById("chat-reconnect").addEventListener("click", function() {
+    
+    BuddyUp.log("TRYING TO RECONNECT TO SOCKET SERVER: ");
+    BuddyUp.log("server: " + BuddyUp.socketServer + " clientType: " + BuddyUp.clientType + " group: " +  BuddyUp.groupID);
+
+    SocketTransport.openNewSocketCx(
+      BuddyUp.socketServer, BuddyUp.socketProtocol, BuddyUp.clientType, BuddyUp.groupID
+    );
+    
   }, false);
   
   document.getElementById("chat-disconnect").addEventListener("click", function() {
@@ -88,14 +123,50 @@ document.addEventListener("DOMContentLoaded", function () {
   }, false);
   
   
-  
-  navigator.mozSetMessageHandler('activity', function(activityRequest) {
-    var option = activityRequest.source;
+  var chatTextField = document.getElementById("composer-message");
+    
+  chatTextField.addEventListener("focus", function() {
 
-    if (option.name === "buddyup") {
-      console.log("BUDDY UP CLIENT HANDLING INCOMING ACTIVITY!!!");
+    var timestamp = new Date().getTime();
+    var msg = '{ "clientID": "' + SocketTransport.clientID + '", "groupID": "' + SocketTransport.groupID + '", "type": "uiEvent", "uiEvent": "typing", "status": "ok", "x": 0, "y": 0, "timestamp": ' + timestamp + ' }';
+
+    try {
+      console.log("sending: " + msg);
+      SocketTransport.socket.send(msg);
     }
-  });
+    catch (er) {
+      console.log("couldn't send typing state..."); 
+    }
+
+  }, false);
+
+  chatTextField.addEventListener("blur", function() {
+    var timestamp = new Date().getTime();
+    var msg = '{ "clientID": "' + SocketTransport.clientID + '", "groupID": "' + SocketTransport.groupID + '", "type": "uiEvent", "uiEvent": "donetyping", "status": "ok", "x": 0, "y": 0, "timestamp": ' + timestamp + ' }';
+
+    try {
+      console.log("sending: " + msg);
+      SocketTransport.socket.send(msg);
+    }
+    catch (er) {
+      console.log("couldn't send typing state..."); 
+    }
+
+  }, false);
+  
+  
+  
+  if (navigator.mozSetMessageHandler) {
+    
+    navigator.mozSetMessageHandler('activity', function(activityRequest) {
+      var option = activityRequest.source;
+
+      if (option.name === "buddyup") {
+        console.log("BUDDY UP CLIENT HANDLING INCOMING ACTIVITY!!!");
+      }
+    });
+  
+  }
   
   
 });
@@ -355,6 +426,8 @@ var SocketTransport = {
         SocketTransport.isOpen = true;
         
 
+        document.querySelector("#chat-reconnect").style.display = "none";
+        
         BuddyUp.log("SOCKET Connected!");
         
         // say hi to the server!
@@ -388,6 +461,8 @@ var SocketTransport = {
         
         SocketTransport.isOpen = false;
         
+        document.querySelector("#chat-reconnect").style.display = "block";
+        
         //BuddyUp.stopScreenCap();
         
         
@@ -412,6 +487,8 @@ var SocketTransport = {
         console.log ("SOCKET CLOSING!");
         console.log(event.reason);
         
+        document.querySelector("#chat-reconnect").style.display = "block";
+        
         SocketTransport.socket = false;
         SocketTransport.isOpen = false;
         
@@ -425,6 +502,8 @@ var SocketTransport = {
     
     else {
 
+      console.log("NO SOCKET?");
+      
     }
     
     this.callCount = 0;
@@ -463,12 +542,31 @@ var SocketTransport = {
       
       var time = new Date();
       
-      document.getElementById("chat-list").innerHTML += '<li data-usertype="controller"><h3>Jen, Firefox OS Helper</h3><img src="assets/avatar.png" class="avatar" /><p>'+ inMessage.chatText +'</p><time class="timestamp">' + dateFormat(new Date(), "longTime") + '</time></li>';
+      var tempTyping = document.querySelector(".temp-typing");
+      if (tempTyping) tempTyping.parentNode.removeChild(tempTyping);
+      
+      document.getElementById("chat-list").innerHTML += '<li data-usertype="controller"><h3>Martin, Firefox OS Helper</h3><img src="assets/avatar.png" class="avatar" /><p>'+ inMessage.chatText +'</p><time class="timestamp">' + dateFormat(new Date(), "longTime") + '</time></li>';
       
 
-      document.getElementById("chat-list").scrollTop = document.getElementById("chat-list").scrollHeight + 50;
-        
-
+      window.scrollTo(0, document.body.scrollHeight);
+      
+    }
+    else if (inMessage.uiEvent == "typing" && inMessage.clientID != SocketTransport.clientID) {
+      
+      var tempTyping = document.querySelector(".temp-typing");
+      if (tempTyping) tempTyping.parentNode.removeChild(tempTyping);
+      
+      document.getElementById("chat-list").innerHTML += '<li class="temp-typing" data-usertype="controller"><h3>Martin, Firefox OS Helper</h3><img src="assets/avatar.png" class="avatar" /><p><img class="typing-indicator" src="assets/typing.gif"></p></li>';
+      
+      window.scrollTo(0, document.body.scrollHeight);
+      
+    }
+    else if (inMessage.uiEvent == "donetyping" && inMessage.clientID != SocketTransport.clientID) {
+      
+      var tempTyping = document.querySelector(".temp-typing");
+      if (tempTyping) tempTyping.parentNode.removeChild(tempTyping);
+      
+      window.scrollTo(0, document.body.scrollHeight);
       
     }
     

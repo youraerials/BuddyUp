@@ -153,6 +153,39 @@ var BuddyUp = {
       
     }, false);
     
+    var chatTextField = document.getElementById("new-chat-text");
+    
+    chatTextField.addEventListener("focus", function() {
+      
+      var timestamp = new Date().getTime();
+      var msg = '{ "clientID": "' + SocketTransport.clientID + '", "groupID": "' + SocketTransport.groupID + '", "type": "uiEvent", "uiEvent": "typing", "status": "ok", "x": 0, "y": 0, "timestamp": ' + timestamp + ' }';
+
+      try {
+        console.log("sending: " + msg);
+        SocketTransport.socket.send(msg);
+      }
+      catch (er) {
+        console.log("couldn't send typing state..."); 
+      }
+      
+    }, false);
+    
+    chatTextField.addEventListener("blur", function() {
+      var timestamp = new Date().getTime();
+      var msg = '{ "clientID": "' + SocketTransport.clientID + '", "groupID": "' + SocketTransport.groupID + '", "type": "uiEvent", "uiEvent": "donetyping", "status": "ok", "x": 0, "y": 0, "timestamp": ' + timestamp + ' }';
+
+      try {
+        console.log("sending: " + msg);
+        SocketTransport.socket.send(msg);
+      }
+      catch (er) {
+        console.log("couldn't send typing state..."); 
+      }
+      
+    }, false);
+    
+    
+    
     document.getElementById("chat-send-btn").addEventListener("click", function() {
       
       var chatText = document.getElementById("new-chat-text").value;
@@ -706,9 +739,28 @@ var SocketTransport = {
      
       console.log("!!!!! WOW! incoming chat!!");
       
+      var tempTyping = document.querySelector(".temp-typing");
+      if (tempTyping) tempTyping.parentNode.removeChild(tempTyping);
+      
       document.getElementById("chat-log").innerHTML = '<div class="chat-them">' + inMessage.chatText + '</div>' + document.getElementById("chat-log").innerHTML;
       
       
+      
+    }
+    
+    else if (inMessage.uiEvent == "typing" && inMessage.clientID != SocketTransport.clientID) {
+      
+      var tempTyping = document.querySelector(".temp-typing");
+      if (tempTyping) tempTyping.parentNode.removeChild(tempTyping);
+      
+      document.getElementById("chat-log").innerHTML = '<div class="chat-them temp-typing"><img class="typing-indicator" src="assets/typing.gif"></div>' + document.getElementById("chat-log").innerHTML;
+      
+      
+    }
+    else if (inMessage.uiEvent == "donetyping" && inMessage.clientID != SocketTransport.clientID) {
+      
+      var tempTyping = document.querySelector(".temp-typing");
+      if (tempTyping) tempTyping.parentNode.removeChild(tempTyping);
       
     }
     
