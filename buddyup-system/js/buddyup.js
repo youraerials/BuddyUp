@@ -5,14 +5,14 @@
 
 /*
 
-To get BuddyUp functionality installed, you need to copy the "buddyup-system" directory
+To get BuddyUp functionality installed, you need to copy the "buddyup" directory
 into your source tree's gaia/apps/system tree, peer to the system app's index.html file.
 
-Then, edit the system's index.html file and add
+Then, edit the index.html file and add
 
 <!-- Buddy Up -->
-<script defer="" src="buddyup-system/js/buddyup.js"></script>
-<link rel="stylesheet" type="text/css" href="buddyup-system/style/buddyup.css">
+<script defer="" src="buddyup/js/buddyup.js"></script>
+<link rel="stylesheet" type="text/css" href="buddyup/style/buddyup.css">
 
 into the <head> block and reflash gaia onto your device
 

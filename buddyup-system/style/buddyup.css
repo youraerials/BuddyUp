@@ -28,19 +28,32 @@
 }
 
 
+#buddyup-active-indicator {
+  
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2.4rem;
+  background: teal;
+  opacity: 0.8;
+  z-index: 99999;
+  
+}
+
 #buddyup-chat-hud {
   
   position: absolute;
   top: 0;
   left: 2vw;
   width: 100vw;
-  height: 2rem;
+  height: 2.4rem;
   pointer-events: none;
   overflow: hidden;
   pointer-events: none;
   z-index: 999999;
   font-size: 12px;
-  line-height: 2rem;
+  line-height: 2.4rem;
   color: white;
   text-shadow: 1px 1px 2px #999;
   text-align: left;
@@ -137,19 +150,6 @@
   width: 100%;
   height: 2rem;
   background: rgba(255,0,0,0.5);
-  
-}
-
-#buddyup-active-indicator {
-  
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 2rem;
-  background: teal;
-  opacity: 0.8;
-  z-index: 99999;
   
 }
 
